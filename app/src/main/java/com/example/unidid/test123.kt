@@ -14,7 +14,7 @@
 //import java.io.OutputStreamWriter
 //import java.io.InputStreamReader
 //import java.io.BufferedReader
-//import java.lang.StringBuffer
+//import java.lang.StringBuffera
 //import android.util.Log
 //import java.net.MalformedURLException
 //import java.io.IOException
@@ -39,8 +39,8 @@
 //    }
 //
 //    internal inner class CustomTask : AsyncTask<String?, Void?, String?>() {
-//        var sendMsg: String? = null
-//        var receiveMsg: String? = null
+//        private var sendMsg: String? = null
+//        private var receiveMsg: String? = null
 //        protected override fun doInBackground(vararg strings: String): String? {
 //            try {
 //                var str: String?
@@ -69,6 +69,10 @@
 //                e.printStackTrace()
 //            }
 //            return receiveMsg
+//        }
+//
+//        override fun doInBackground(vararg p0: String?): String? {
+//            TODO("Not yet implemented")
 //        }
 //    }
 //
