@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         override fun doInBackground(vararg strings: String?): String {
             try {
                 var str: String?
-                val url = URL("http://192.168.10.19:8080/exex/data.jsp")
+                //val url = URL("http://192.168.10.19:8080/exex/data.jsp")
+                val url = URL("http://192.168.1.164:8080/exex/data.jsp")
                 val conn = url.openConnection() as HttpURLConnection
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
                 conn.requestMethod = "POST"
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.btn_login -> {
                     val loginid = userId.text.toString()
                     val loginpw = userPwd.text.toString()
+                    Log.e("에러코드 ID 확인 = ", loginid)
+                    Log.e("에러코드 ID 확인 = ", loginpw)
                     try {
                         val result : String? = CustomTask().execute(loginid, loginpw, "login").get()
                         if(result == "true") {

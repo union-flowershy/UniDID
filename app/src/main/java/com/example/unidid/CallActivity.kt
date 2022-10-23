@@ -1,6 +1,7 @@
 package com.example.unidid
 
 //import android.R
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,9 +12,13 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import java.io.BufferedReader
 import java.io.DataInputStream
 import java.io.DataOutputStream
+import java.io.InputStreamReader
+import java.io.PrintWriter
 import java.net.Socket
+import java.util.Scanner
 
 
 class CallActivity: AppCompatActivity() {
@@ -49,32 +54,36 @@ class CallActivity: AppCompatActivity() {
     }
 
     inner class NetworkThread: Thread() {
+        @SuppressLint("SuspiciousIndentation")
         override fun run() {
             try {
                 val socket: Socket
-                
+
                 //소켓 서버 접속
-                socket = Socket("192.168.10.19", 55555)
+                //socket = Socket("192.168.10.19", 55555)
+                socket = Socket("192.168.1.164", 55555)
                 System.out.println("서버 접속 성공")
 
                 // 서버에 보낼 주문번호 전송
                 val output = socket.getOutputStream()
-                val dos = DataOutputStream(output)
-                val orderNum = callNum.text.toString()
-                dos.writeUTF(orderNum)
-                Log.e("전송에 성공했습니다 전송 번호는 = ", orderNum)
+                val writer: PrintWriter = PrintWriter(output, true )
+                    writer.println(callNum.text.toString())
+                    Log.e("전송에 성공했습니다 전송 번호는 = ", callNum.text.toString())
+//                val dos = DataOutputStream(output)
+//                val orderNum = callNum.text.toString()
+//                dos.writeUTF(orderNum)
+//                Log.e("전송에 성공했습니다 전송 번호는 = ", orderNum)
 
-                
                 // 서버에서 보낸 메세지 읽는 Thread
-                val input = socket.getInputStream()
-                val dis = DataInputStream(input)
+//                val input = socket.getInputStream()
+//                val dis = DataInputStream(input)
 
-                if(dis != null) {
+                if(output != null) {
                     Log.e("전송에", "성공했습니다")
                 } else {
                     Log.e("전송에", "실패했습니다")
                 }
-                
+
             }catch(e: Exception) {
                 e.printStackTrace()
             }
@@ -82,42 +91,5 @@ class CallActivity: AppCompatActivity() {
 
 
     }
-
-
-//    inner class NetworkThread: Thread() {
-//        override fun run() {
-//            try{
-//                val socket = Socket("192.168.10.19", 55555)
-//
-//                val input = socket.getInputStream()
-//                var dis = DataInputStream(input)
-//
-//                val output = socket.getOutputStream()
-//                val dos = DataOutputStream(output)
-//
-////                var data1 = dis.readInt()
-////                var data2 = dis.readDouble()
-////                var data3 = dis.readUTF()
-//
-//
-//                val orderNum = callNum.text.toString()
-//
-////                dos.writeInt(5)
-////                dos.writeDouble(22.22)
-//                dos.writeUTF(orderNum)
-//
-//                socket.close()
-//
-////                runOnUiThread {
-////                    textView.append("data1 : ${data1}\n")
-//////                    textView.append("data2 :  ${data2}\n")
-//////                    textView.append("data3 : ${data3}\n")
-////                }
-//
-//            }catch(e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
 
 }
