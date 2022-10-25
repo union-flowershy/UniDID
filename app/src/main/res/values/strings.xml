@@ -5,4 +5,5 @@
     <string name="Login">Login</string>
     <string name="Call">호출하기</string>
     <string name="textbox">번호를 입력해주세요</string>
+    <string name="Reset"> 초기화 </string>
 </resources>

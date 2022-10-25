@@ -62,8 +62,8 @@ class MainActivity : AppCompatActivity() {
         override fun doInBackground(vararg strings: String?): String {
             try {
                 var str: String?
-                val url = URL("http://192.168.10.19:8080/exex/data.jsp")  // 사무실 IP
-                //val url = URL("http://192.168.1.164:8080/exex/data.jsp")  // 집 IP
+//                val url = URL("http://192.168.10.19:8080/exex/data.jsp")  // 사무실 IP
+                val url = URL("http://192.168.1.164:8080/exex/data.jsp")  // 집 IP
                 val conn = url.openConnection() as HttpURLConnection
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
                 conn.requestMethod = "POST"
