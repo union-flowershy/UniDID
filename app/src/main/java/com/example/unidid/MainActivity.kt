@@ -62,8 +62,8 @@ class MainActivity : AppCompatActivity() {
         override fun doInBackground(vararg strings: String?): String {
             try {
                 var str: String?
-//                val url = URL("http://192.168.10.19:8080/exex/data.jsp")  // 사무실 IP
-                val url = URL("http://192.168.1.164:8080/exex/data.jsp")  // 집 IP
+                val url = URL("http://192.168.10.19:8080/exex/data.jsp")  // 사무실 IP
+//                val url = URL("http://192.168.1.164:8080/exex/data.jsp")  // 집 IP
                 val conn = url.openConnection() as HttpURLConnection
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
                 conn.requestMethod = "POST"
@@ -101,22 +101,23 @@ class MainActivity : AppCompatActivity() {
                     Log.e("에러코드 ID 확인 = ", loginid)
                     Log.e("에러코드 ID 확인 = ", loginpw)
                     try {
-                        val result : String? = CustomTask().execute(loginid, loginpw, "login").get()
-                        if(result == "true") {
-                            Toast.makeText(this, "로그인", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, CallActivity::class.java)
-                            intent.putExtra("storeName", loginid)
-                            startActivity(intent)
-                            finish()
-                        } else if(result == "false") {
-                            Toast.makeText(this, "아이디 또는 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show()
-                            userId.setText("")
-                            userPwd.setText("")
-                        } else if(result == "noId") {
-                            Log.e("아이디 없음",  "정상 실행")
-                        } else {
-                            Log.e("result 실패", result.toBoolean().toString())
-                        }
+                        val result: String? = CustomTask().execute(loginid, loginpw, "login").get()
+                            if (result == "true") {
+                                Toast.makeText(this, "로그인", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, CallActivity::class.java)
+                                intent.putExtra("storeName", loginid)
+                                startActivity(intent)
+                                finish()
+                            } else if (result == "false") {
+                                Toast.makeText(this, "아이디 또는 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT)
+                                    .show()
+                                userId.setText("")
+                                userPwd.setText("")
+                            } else if (result == "noId") {
+                                Log.e("아이디 없음", "정상 실행")
+                            } else {
+                                Log.e("result 실패", result.toBoolean().toString())
+                            }
                     }catch (e: Exception) {
                         e.printStackTrace()
                     }

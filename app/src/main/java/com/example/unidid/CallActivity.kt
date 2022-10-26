@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import java.io.PrintWriter
@@ -54,33 +55,35 @@ class CallActivity: AppCompatActivity() {
         })
 
         sendBtn.setOnClickListener {
-            val thread = NetworkThread("sendBtn")
-            thread.start()
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            builder.setTitle("전송되었습니다.")
-                .setMessage(callNum.text.toString())
-                .setPositiveButton("확인", DialogInterface.OnClickListener{dialog, id ->
-
-                })
-            builder.show()
+            if (!callNum.text.toString().equals(null) && !callNum.text.toString().equals("") && !callNum.text.toString().equals("null")) {
+                val thread = NetworkThread("sendBtn")
+                thread.start()
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                builder.setTitle("전송되었습니다.")
+                    .setMessage(callNum.text.toString())
+                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id ->
+                    })
+                builder.show()
+            }else {
+                Toast.makeText(this@CallActivity, "주문번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
-
         resetBtn.setOnClickListener {
-            val thread = NetworkThread("resetBtn")
-            thread.start()
+            val thread: Thread = NetworkThread("resetBtn")
+                thread.start()
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            builder.setTitle("초기화")
-                .setMessage("초기화를 진행하였습니다")
-                .setPositiveButton("확인", DialogInterface.OnClickListener{dialog, id ->
-
-                })
-            builder.show()
+                builder.setTitle("초기화")
+                  .setMessage("초기화를 진행하였습니다")
+                  .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id ->
+                  })
+                builder.show()
         }
 
         val intent = getIntent()
         val storeName = intent.getStringExtra("storeName")
         val text_name = findViewById<TextView>(R.id.textView)
         text_name.setText(storeName)
+
     }
 
     //텍스트 바깥 레이아웃 클릭시 키보드 사라짐
@@ -92,7 +95,6 @@ class CallActivity: AppCompatActivity() {
             InputMethodManager.HIDE_NOT_ALWAYS
         )
     }
-
     inner class NetworkThread(s: String): Thread() {
         val type: String = s
         @SuppressLint("SuspiciousIndentation")
@@ -101,33 +103,33 @@ class CallActivity: AppCompatActivity() {
                 val socket: Socket
 
                 //소켓 서버 접속
-//                socket = Socket("192.168.10.19", 55555) // 사무실 IP
-                socket = Socket("192.168.1.164", 55555) // 집 IP
+                socket = Socket("192.168.10.19", 55555) // 사무실 IP
+//                socket = Socket("192.168.1.164", 55555) // 집 IP
                 System.out.println("서버 접속 성공")
 
                 if (type.equals("sendBtn")) {
                     // 서버에 보낼 주문번호 전송
                     val output = socket.getOutputStream()
                     val writer: PrintWriter = PrintWriter(output, true)
+
                     writer.println(callNum.text.toString())
                     Log.e("전송에 성공했습니다 전송 번호는 = ", callNum.text.toString())
-                    callNum.setText(null)
+                    callNum.text = null
 
 
-                    if (output != null) {
-                        Log.e("전송에", "성공했습니다")
-                    } else {
-                        Log.e("전송에", "실패했습니다")
-                    }
-
+                        if (output != null) {
+                            Log.e("전송에", "성공했습니다")
+                        } else {
+                            Log.e("전송에", "실패했습니다")
+                        }
                 } else {
                     val output = socket.getOutputStream()
                     val writer: PrintWriter = PrintWriter(output, true)
                     writer.println("reset")
                 }
             }catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                e.printStackTrace()
             }
         }
+    }
 }
