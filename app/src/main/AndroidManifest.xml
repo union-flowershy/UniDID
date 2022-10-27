@@ -17,6 +17,7 @@
 <!--        <activity android:name=".CallActivity"/>-->
         <activity android:name=".SplashActivity"/>
         <activity android:name=".CallActivity"/>
+        <activity android:name=".GridActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
