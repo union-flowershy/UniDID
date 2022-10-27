@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                         val result: String? = CustomTask().execute(loginid, loginpw, "login").get()
                             if (result == "true") {
                                 Toast.makeText(this, "로그인", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, CallActivity::class.java)
+                                val intent = Intent(this, GridActivity::class.java)
                                 intent.putExtra("storeName", loginid)
                                 startActivity(intent)
                                 finish()
