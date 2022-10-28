@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/sky"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/first_editText2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:text="8888"
+            android:textColor="@color/hex0"
+            android:background="@color/white"
+            android:gravity="center|right"
+            android:letterSpacing="0.06"
+            android:fontFamily="@font/digi"
+            android:textSize="160dp" />
+
+        <TextView
+            android:id="@+id/first_editText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:text=""
+            android:textColor="@color/black"
+            android:background="@color/hex1"
+            android:gravity="center|right"
+            android:letterSpacing="0.06"
+            android:fontFamily="@font/digi"
+            android:textSize="160dp" />
+
+
+    </FrameLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:columnCount="3"
+        android:orientation="horizontal"
+        android:background="@color/gray"
+        android:rowCount="5">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num1"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+
+            android:text="1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num2"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="2" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num3"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="3" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num4"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="4" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num5"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="5" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num6"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="6" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num7"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="7" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num8"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="8" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num9"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="9" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="28sp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="◀" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/num0"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="0" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/clear"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="호출\n삭제" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/left"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="←" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/right"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="→" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/callBtn"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="1dp"
+            android:textSize="35sp"
+            android:background="@color/sky"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="호출" />
+
+
+    </GridLayout>
+
+</LinearLayout>

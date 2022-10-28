@@ -14,12 +14,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-<!--        <activity android:name=".CallActivity"/>-->
+<!--        <activity android:name=".MainActivity"/>-->
         <activity android:name=".SplashActivity"/>
         <activity android:name=".CallActivity"/>
-        <activity android:name=".GridActivity"/>
+        <activity android:name=".MainActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".GridActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
