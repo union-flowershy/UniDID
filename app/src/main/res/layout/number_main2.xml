@@ -23,7 +23,7 @@
             android:background="@color/white"
             android:gravity="center|right"
             android:letterSpacing="0.06"
-            android:fontFamily="@font/digi"
+            android:fontFamily="@font/digital"
             android:textSize="160dp" />
 
         <TextView
@@ -31,12 +31,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:text=""
             android:textColor="@color/black"
             android:background="@color/hex1"
             android:gravity="center|right"
             android:letterSpacing="0.06"
-            android:fontFamily="@font/digi"
+            android:fontFamily="@font/digital"
+            android:maxLength="4"
             android:textSize="160dp" />
 
 
@@ -176,7 +176,7 @@
             android:text="0" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/clear"
+            android:id="@+id/clearBtn"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="1dp"

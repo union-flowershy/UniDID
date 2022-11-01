@@ -1,5 +1,6 @@
 package com.example.unidid
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     var btnListener = View.OnClickListener { view ->
             when(view.id) {
                 R.id.btn_login -> {
