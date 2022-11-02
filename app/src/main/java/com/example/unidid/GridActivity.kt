@@ -139,8 +139,8 @@ class GridActivity: AppCompatActivity() {
         override fun run() {
             try {
                 //소켓 서버 접속
-//                val socket: Socket = Socket("192.168.10.19", 55555) // 사무실 IP
-                val socket = Socket("192.168.1.164", 55555) // 집 IP
+                val socket: Socket = Socket("192.168.10.19", 55555) // 사무실 IP
+//                val socket = Socket("192.168.1.164", 55555) // 집 IP
                 println("서버 접속 성공")
 
                 if (type.equals("callBtn")) {
