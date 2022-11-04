@@ -3,6 +3,7 @@
     <string name="ID">아이디</string>
     <string name="PW">비밀번호</string>
     <string name="Login">Login</string>
+    <string name="Join">Join</string>
     <string name="Call">호출하기</string>
     <string name="textbox">번호를 입력해주세요</string>
     <string name="Reset"> 초기화 </string>

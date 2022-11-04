@@ -21,7 +21,7 @@ class SplashActivity  : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent) //intent 에 명시된 액티비티로 이동
             finish() //현재 액티비티 종료
-        }, (2000 * sec).toLong()) // sec초 정도 딜레이를 준 후 시작
+        }, (3000 * sec).toLong()) // sec초 정도 딜레이를 준 후 시작
     }
 
 

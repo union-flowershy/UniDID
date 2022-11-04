@@ -12,6 +12,9 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.io.PrintWriter
 import java.net.Socket
 
@@ -22,12 +25,15 @@ class GridActivity: AppCompatActivity() {
     private lateinit var gridView: GridView
     private val numberWord = arrayListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "←", "0", "호출\n삭제", "왼쪽", "오른쪽", "호출")
     private val numberImage = arrayListOf(R.drawable.one, R.drawable.two, R.drawable.three, R.drawable.four, R.drawable.five, R.drawable.six)
+    private var auth : FirebaseAuth? = null // Firebase 이메일
 
 
     @SuppressLint("ClickableViewAccessibility", "CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.number_main2)
+
+        auth = Firebase.auth // Firebase 이메일
 
         first_editText = findViewById<TextView>(R.id.first_editText)
 

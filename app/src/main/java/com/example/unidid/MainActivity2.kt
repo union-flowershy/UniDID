@@ -18,14 +18,13 @@ import java.io.*
 import java.net.*
 import java.lang.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
 
     lateinit var userId: EditText
     lateinit var userPwd: EditText
     lateinit var loginBtn: Button
     lateinit var activityMain: ConstraintLayout
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
