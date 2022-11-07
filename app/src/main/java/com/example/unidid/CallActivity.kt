@@ -34,7 +34,7 @@ class CallActivity: AppCompatActivity() {
     lateinit var type: String
 
 
-    @SuppressLint("ClickableViewAccessibility", "CutPasteId")
+    @SuppressLint("ClickableViewAccessibility", "CutPasteId", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.call_main)

@@ -38,26 +38,11 @@ class GridActivity: AppCompatActivity() {
 
         first_editText = findViewById<TextView>(R.id.first_editText)
         callBtn = findViewById<View>(R.id.callBtn) as Button
-        callBtn.setOnClickListener(btnListener)
 
         setButton()
 
         auth = Firebase.auth //파이어베이스 가입
         firestore = FirebaseFirestore.getInstance() //파이어베이스 스토어 초기화
-    }
-
-    var btnListener = View.OnClickListener { view ->
-        when(view.id) {
-            R.id.callBtn -> {
-                var resultDTO = ResultDTO()
-                resultDTO.uid = auth?.currentUser?.uid
-                resultDTO.callNumber = first_editText.text.toString()
-                resultDTO.timestamp = System.currentTimeMillis()
-
-                firestore?.collection(auth!!.currentUser!!.uid)?.document()?.set(resultDTO)
-                Toast.makeText(this, "저장완료", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     fun setButton() {
@@ -121,8 +106,11 @@ class GridActivity: AppCompatActivity() {
             }
             R.id.callBtn -> {
                 if (!first_editText.text.toString().equals(null) && !first_editText.text.toString().equals("") && !first_editText.text.toString().equals("null")) {
-                    val thread = NetworkThread("callBtn")
-                    thread.start()
+                    val resultDTO = ResultDTO()
+                        resultDTO.uid = auth?.currentUser?.uid
+                        resultDTO.callNumber = first_editText.text.toString()
+                        resultDTO.timestamp = System.currentTimeMillis()
+                        firestore?.collection(auth!!.currentUser!!.uid)?.document()?.set(resultDTO)
                     val builder: AlertDialog.Builder = AlertDialog.Builder(this)
                     builder.setTitle("전송되었습니다.")
                         .setMessage(first_editText.text.toString())
@@ -134,8 +122,6 @@ class GridActivity: AppCompatActivity() {
                 }
             }
             R.id.clearBtn -> {
-                val thread: Thread = NetworkThread("clearBtn")
-                thread.start()
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
                 builder.setTitle("초기화")
                     .setMessage("초기화를 진행하였습니다")
@@ -145,40 +131,5 @@ class GridActivity: AppCompatActivity() {
             }
         }
    }
-
-    inner class NetworkThread(s: String): Thread() {
-        private val type: String = s
-        @SuppressLint("SuspiciousIndentation")
-        override fun run() {
-            try {
-                //소켓 서버 접속
-                val socket: Socket = Socket("192.168.10.19", 55555) // 사무실 IP
-//                val socket = Socket("192.168.1.164", 55555) // 집 IP
-                println("서버 접속 성공")
-
-                if (type.equals("callBtn")) {
-                    // 서버에 보낼 주문번호 전송
-                    val output = socket.getOutputStream()
-                    val writer: PrintWriter = PrintWriter(output, true)
-
-                    writer.println(first_editText.text.toString())
-                    Log.e("전송에 성공했습니다 전송 번호는 = ", first_editText.text.toString())
-                    first_editText.text = null
-
-                    if (output != null) {
-                        Log.e("전송에", "성공했습니다")
-                    } else {
-                        Log.e("전송에", "실패했습니다")
-                    }
-                } else {
-                    val output = socket.getOutputStream()
-                    val writer: PrintWriter = PrintWriter(output, true)
-                    writer.println("clearBtn")
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
 
 }
