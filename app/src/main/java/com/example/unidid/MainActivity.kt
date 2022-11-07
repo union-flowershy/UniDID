@@ -1,6 +1,7 @@
 package com.example.unidid
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
@@ -14,6 +15,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.internal.ViewUtils.hideKeyboard
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import java.io.*
 import java.net.*
 import java.lang.*
@@ -23,7 +29,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var userId: EditText
     lateinit var userPwd: EditText
     lateinit var loginBtn: Button
+    lateinit var joinBtn: Button
     lateinit var activityMain: ConstraintLayout
+    private var auth : FirebaseAuth? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,17 +41,21 @@ class MainActivity : AppCompatActivity() {
         userId = findViewById<View>(R.id.edit_id) as EditText
         userPwd = findViewById<View>(R.id.edit_pwd) as EditText
         loginBtn = findViewById<View>(R.id.btn_login) as Button
+        joinBtn = findViewById<Button>(R.id.btn_join) as Button
         activityMain = findViewById<View>(R.id.activityMain) as ConstraintLayout
         loginBtn.setOnClickListener(btnListener)
+        joinBtn.setOnClickListener(btnListener)
+
+        auth = Firebase.auth //파이어베이스 가입
 
         Log.e("onCreate 실행", "정상 실행")
-
 
         //텍스트 바깥 레이아웃 클릭시 키보드 사라짐
         activityMain.setOnTouchListener(View.OnTouchListener { v, event ->
             hideKeyboard()
             false
         })
+
     }
 
     //텍스트 바깥 레이아웃 클릭시 키보드 사라짐
@@ -56,75 +68,85 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    class CustomTask : AsyncTask<String?, Void?, String?>() {
-        var sendMsg: String? = null
-        var receiveMsg: String? = null
+//    // 로그아웃하지 않을 시 자동 로그인 , 회원가입시 바로 로그인 됨
+//    public override fun onStart() {
+//        super.onStart()
+//        moveMainPage(auth?.currentUser)
+//    }
 
-        @Deprecated("Deprecated in Java")
-        override fun doInBackground(vararg strings: String?): String {
-            try {
-                var str: String?
-                val url = URL("http://192.168.10.19:8080/exex/data.jsp")  // 사무실 IP
-//                val url = URL("http://192.168.1.164:8080/exex/data.jsp")  // 집 IP
-                val conn = url.openConnection() as HttpURLConnection
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-                conn.requestMethod = "POST"
-                val osw = OutputStreamWriter(conn.outputStream)
-                sendMsg = "userID=" + strings[0] + "&userPW=" + strings[1] + "&type=" + strings[2]
-                osw.write(sendMsg)
-                osw.flush()
-                if (conn.responseCode == HttpURLConnection.HTTP_OK) {
-                    val tmp = InputStreamReader(conn.inputStream, "UTF-8")
-                    val reader = BufferedReader(tmp)
-                    val buffer = StringBuffer()
-                    str = reader.readLine()
-                    while (reader.readLine().also { str = it } != null) {
-                        buffer.append(str)
+    // 유저정보 넘겨주고 메인 액티비티 호출
+    fun moveMainPage(user: FirebaseUser?){
+        if(user!= null){
+            startActivity(Intent(this,GridActivity::class.java))
+            finish()
+        }
+    }
+
+    // 파이어베이스 회원가입 구현
+    private fun createAccount(email: String, password: String) {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            auth?.createUserWithEmailAndPassword(email, password)
+                ?.addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            this, "계정 생성 완료.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        moveMainPage(auth?.currentUser)
+                    } else {
+                        Log.w(TAG, "왜 실패?", task.exception)
+                        Toast.makeText(
+                            this, "계정 생성 실패",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                    receiveMsg = buffer.toString()
-                    Log.e("receiveMsg ", buffer.toString())
-                } else {
-                    Log.i("통신 결과", conn.responseCode.toString() + "에러")
                 }
-            } catch (e: MalformedURLException) {
-                e.printStackTrace()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            return receiveMsg!!
+        }
+    }
+
+    // 로그인
+    private fun signIn(email: String, password: String) {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            auth?.signInWithEmailAndPassword(email, password)
+                ?.addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            baseContext, "로그인에 성공 하였습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        moveMainPage(auth?.currentUser)
+                    } else {
+                        Toast.makeText(
+                            baseContext, "로그인에 실패 하였습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
         }
     }
 
     @SuppressLint("SuspiciousIndentation")
     var btnListener = View.OnClickListener { view ->
-            when(view.id) {
-                R.id.btn_login -> {
-                    val loginid = userId.text.toString()
-                    val loginpw = userPwd.text.toString()
-                    Log.e("에러코드 ID 확인 = ", loginid)
-                    Log.e("에러코드 ID 확인 = ", loginpw)
-                    try {
-                        val result: String? = CustomTask().execute(loginid, loginpw, "login").get()
-                            if (result == "true") {
-                                Toast.makeText(this, "로그인", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, GridActivity::class.java)
-                                intent.putExtra("storeName", loginid)
-                                startActivity(intent)
-                                finish()
-                            } else if (result == "false") {
-                                Toast.makeText(this, "아이디 또는 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT)
-                                    .show()
-                                userId.setText("")
-                                userPwd.setText("")
-                            } else if (result == "noId") {
-                                Log.e("아이디 없음", "정상 실행")
-                            } else {
-                                Log.e("result 실패", result.toBoolean().toString())
-                            }
-                    }catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
+        when(view.id) {
+            R.id.btn_join -> {
+                Log.e("조인버튼", "눌렀음")
+                val loginid = userId.text.toString().trim()
+                val loginpw = userPwd.text.toString().trim()
+
+                Log.e(loginid.toString(), "loginid")
+                Log.e(loginpw.toString(), "loginpw")
+                createAccount(loginid, loginpw)
+            }
+            R.id.btn_login -> {
+                Log.e("로긴버튼", "눌렀음")
+                val loginid = userId.text.toString().trim()
+                val loginpw = userPwd.text.toString().trim()
+
+                Log.e(loginid.toString(), "loginid")
+                Log.e(loginpw.toString(), "loginpw")
+                signIn(loginid, loginpw)
             }
         }
+    }
+
 }

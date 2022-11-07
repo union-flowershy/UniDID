@@ -20,7 +20,7 @@ import java.io.PrintWriter
 import java.net.Socket
 
 
-class GridActivity: AppCompatActivity() {
+class GridActivity2: AppCompatActivity() {
 
     private lateinit var first_editText: TextView
     private lateinit var gridView: GridView
@@ -41,6 +41,21 @@ class GridActivity: AppCompatActivity() {
         callBtn.setOnClickListener(btnListener)
 
         setButton()
+//        gridView = findViewById(R.id.gridView)
+//        val numberAdapter: NumberAdapter = NumberAdapter(this@GridActivity, numberWord, numberImage)
+//        val numberAdapter: NumberAdapter = NumberAdapter(this@GridActivity, numberWord)
+//        val numberAdapter: NumberAdapter = NumberAdapter(this@GridActivity, numberImage)
+
+//        gridView.adapter = numberAdapter
+
+//        gridView.setOnItemClickListener(AdapterView.OnItemClickListener() {
+//            override fun onItemClick(adapterView: AdapterView?, view: View, position: Int) {
+//            -> {
+//            }
+//            })
+//        }
+
+
 
         auth = Firebase.auth //파이어베이스 가입
         firestore = FirebaseFirestore.getInstance() //파이어베이스 스토어 초기화
@@ -130,7 +145,7 @@ class GridActivity: AppCompatActivity() {
                         })
                     builder.show()
                 } else {
-                    Toast.makeText(this@GridActivity, "주문번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@GridActivity2, "주문번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
             R.id.clearBtn -> {
