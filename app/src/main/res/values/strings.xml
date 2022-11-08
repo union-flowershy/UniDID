@@ -7,4 +7,7 @@
     <string name="Call">호출하기</string>
     <string name="textbox">번호를 입력해주세요</string>
     <string name="Reset"> 초기화 </string>
+    <string name="menu_account">menu_account</string>
+    <string name="option">환경설정</string>
+    <string name="homepage">www.unionpos.co.kr</string>
 </resources>

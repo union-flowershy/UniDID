@@ -6,16 +6,20 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.GravityCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.main.*
+import kotlinx.android.synthetic.main.main_toolbar.*
 import java.io.PrintWriter
 import java.net.Socket
 
@@ -36,6 +40,13 @@ class GridActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.number_main2)
 
+        // 환경설정 메뉴바 생성
+        setSupportActionBar(main_layout_toolbar)    // 툴바를 액티비티의 앱바로 지정
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)   // 드로어를 꺼낼 홈 버튼 활성화
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.list_large)  // 홈버튼 이미지 변경
+        supportActionBar?.setDisplayShowTitleEnabled(false)     // 툴바에 타이틀 안보이게 설정
+//        main_navigationView?.setNavigationItemSelectedListener(this)
+
         first_editText = findViewById<TextView>(R.id.first_editText)
         callBtn = findViewById<View>(R.id.callBtn) as Button
 
@@ -44,6 +55,31 @@ class GridActivity: AppCompatActivity() {
         auth = Firebase.auth //파이어베이스 가입
         firestore = FirebaseFirestore.getInstance() //파이어베이스 스토어 초기화
     }
+
+    // 액션바 생성
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {  // 메뉴버튼
+                main_drawer_layout.openDrawer(GravityCompat.START)  // 네비게이션 드로어 열기
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    // 액션바 닫기
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if(main_drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            main_drawer_layout.closeDrawers()
+            //테스트용
+            Toast.makeText(this,"back btn clicked",Toast.LENGTH_SHORT).show()
+        } else {
+            super.onBackPressed()
+        }
+
+
+    }
+
 
     fun setButton() {
         val num0: Button = findViewById(R.id.num0)
