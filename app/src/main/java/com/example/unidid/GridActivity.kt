@@ -117,17 +117,19 @@ class GridActivity: AppCompatActivity() {
                         .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id ->
                         })
                     builder.show()
+                    first_editText.text = null
                 } else {
                     Toast.makeText(this@GridActivity, "주문번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
             R.id.clearBtn -> {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                builder.setTitle("초기화")
-                    .setMessage("초기화를 진행하였습니다")
-                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id ->
-                    })
-                builder.show()
+                    builder.setTitle("초기화")
+                        .setMessage("초기화를 진행하였습니다")
+                        .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id ->
+                        })
+                    builder.show()
+                    first_editText.text = null
             }
         }
    }

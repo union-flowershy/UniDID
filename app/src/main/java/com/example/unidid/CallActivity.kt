@@ -117,7 +117,6 @@ class CallActivity: AppCompatActivity() {
                     Log.e("전송에 성공했습니다 전송 번호는 = ", callNum.text.toString())
                     callNum.text = null
 
-
                         if (output != null) {
                             Log.e("전송에", "성공했습니다")
                         } else {
