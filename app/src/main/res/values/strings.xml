@@ -10,4 +10,7 @@
     <string name="menu_account">menu_account</string>
     <string name="option">환경설정</string>
     <string name="homepage">www.unionpos.co.kr</string>
+
+    <string name="background_color">color</string>
+
 </resources>

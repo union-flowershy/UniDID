@@ -6,13 +6,13 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.View.OnClickListener
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -20,8 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.main.*
 import kotlinx.android.synthetic.main.main_toolbar.*
-import java.io.PrintWriter
-import java.net.Socket
 
 
 class GridActivity: AppCompatActivity() {
@@ -38,7 +36,7 @@ class GridActivity: AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility", "CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.number_main2)
+        setContentView(R.layout.main)
 
         // 환경설정 메뉴바 생성
         setSupportActionBar(main_layout_toolbar)    // 툴바를 액티비티의 앱바로 지정
@@ -50,11 +48,14 @@ class GridActivity: AppCompatActivity() {
         first_editText = findViewById<TextView>(R.id.first_editText)
         callBtn = findViewById<View>(R.id.callBtn) as Button
 
+
         setButton()
 
         auth = Firebase.auth //파이어베이스 가입
         firestore = FirebaseFirestore.getInstance() //파이어베이스 스토어 초기화
     }
+
+
 
     // 액션바 생성
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -62,7 +63,14 @@ class GridActivity: AppCompatActivity() {
             android.R.id.home -> {  // 메뉴버튼
                 main_drawer_layout.openDrawer(GravityCompat.START)  // 네비게이션 드로어 열기
             }
+            R.id.account -> {
+                val colorDTO = ColorDTO()
+
+
+            }
         }
+
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -76,10 +84,7 @@ class GridActivity: AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
-
-
     }
-
 
     fun setButton() {
         val num0: Button = findViewById(R.id.num0)
