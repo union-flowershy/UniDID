@@ -55,8 +55,6 @@ class GridActivity: AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance() //파이어베이스 스토어 초기화
     }
 
-
-
     // 액션바 생성
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
